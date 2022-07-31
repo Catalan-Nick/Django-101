@@ -5,12 +5,16 @@
 {% block body %}
     <h1>Welcome to Home Page</h1>
     <!-- <img src="https://upload.wikimedia.org/wikipedia/en/0/0e/Single-family_home.JPG" alt="" height="300px"> -->
+    <a href="{%url 'feed:post'%}">Add a new post &rarr;</a>
+    <hr>
     {% for post in posts %}
         {{ post.text }}<br>
-        {% thumbnail post.image "400x200"  as im %}
-            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
-        {% endthumbnail %}
-        <img src="{{ post.img.url }}" alt="">
+        <a href="{% url 'feed:detail' post.id %}">
+            {% thumbnail post.image "400x200"  as im %}
+                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+            {% endthumbnail %}
+            
+        </a>
         <hr>
     {% endfor%}
 {% endblock %}

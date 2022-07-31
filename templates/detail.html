@@ -2,4 +2,11 @@
 
 {% block title %}Detail View{% endblock  %}
 
-{% block body %} This is where the image will go{% endblock body %}
+{% block body %} 
+<a href="{%url 'feed:index' %}">< Go Back</a>
+    <h3>Text</h3>
+    {{object.text}}
+    <h3>Image</h3>
+    <img src="{{ object.image.url }}" alt=""        style="width: 100%; height: auto">
+    
+{% endblock body %}
