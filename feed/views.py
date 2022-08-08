@@ -1,8 +1,10 @@
 from cgitb import text
+from email import message
 from django import forms
 from django.views.generic import TemplateView, DetailView, FormView
 from .forms import PostForm
 from .models import Post
+from django.contrib import messages
 
 class HomePageView(TemplateView):
     template_name = "home.html"
@@ -21,9 +23,14 @@ class AddPostView(FormView):
     form_class = PostForm
     success_url = "/"
     
+    def dispatch(self, request, *args, **kwargs):
+        self.request = request
+        return super().dispatch(request, *args, **kwargs)
+    
     def form_valid(self, form):
         new_object = Post.objects.create(
             text=form.cleaned_data['text'],
             image=form.cleaned_data['image']
         )
+        messages.add_message(self.request, messages.SUCCESS, 'Your post was successful'   )
         return super().form_valid(form)
